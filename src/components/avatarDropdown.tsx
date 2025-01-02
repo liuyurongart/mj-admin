@@ -1,16 +1,14 @@
 import { TOKEN } from '@/constants/token';
-import { randomColor } from '@/utils';
-import { CaretDownOutlined, LogoutOutlined } from '@ant-design/icons';
+import { LogoutOutlined } from '@ant-design/icons';
 import { useModel, useNavigate } from '@umijs/max';
-import { App, Avatar, Button, Dropdown, MenuProps, Space, Typography } from 'antd';
-import { FC, useMemo } from 'react';
+import { App, Button, Dropdown, Image, MenuProps, Space, Typography } from 'antd';
 
-const AvatarDropdown: FC = () => {
+export const AvatarDropdown: React.FC = () => {
   const navigate = useNavigate();
   const { message } = App.useApp();
   const { initialState } = useModel('@@initialState');
 
-  const { name } = initialState?.userInfo ?? {};
+  const name = initialState?.userInfo;
 
   const logoutHandler = async () => {
     TOKEN.remove();
@@ -32,31 +30,16 @@ const AvatarDropdown: FC = () => {
     },
   ];
 
-  const avatarColor = useMemo(() => randomColor(), []);
-
   return (
     <Dropdown menu={{ items, onClick: menuClickHandler }} trigger={['click']}>
       <Button type="text">
         <Space>
-          <Avatar size="small" alt="avatar" style={{ background: avatarColor }}>
-            {name?.substring(0, 1)}
-          </Avatar>
+          <Image src="http://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" width={26} />
           <div className="max-w-200px">
             <Typography.Text ellipsis>{name}</Typography.Text>
           </div>
-          <CaretDownOutlined />
         </Space>
       </Button>
     </Dropdown>
   );
 };
-
-const AppHeaderRight: FC = () => {
-  return (
-    <Space size="middle">
-      <AvatarDropdown />
-    </Space>
-  );
-};
-
-export { AppHeaderRight };

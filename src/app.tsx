@@ -1,8 +1,8 @@
-import { AppHeaderRight } from '@/components/app-header-right';
 import FAVICON from '@/favicon.ico';
 import { RuntimeConfig, history } from '@umijs/max';
 import { message } from 'antd';
 import { merge } from 'es-toolkit/compat';
+import { AvatarDropdown } from './components/avatarDropdown';
 import { API_BASE_URL } from './constants/misc';
 import { TOKEN } from './constants/token';
 import { getAuthorizationHeader } from './utils';
@@ -71,12 +71,10 @@ export const layout: RuntimeConfig['layout'] = ({ initialState }) => {
     },
     avatarProps: {
       title: userInfo,
+      render: (avatarProps, defaultDom, props) => <AvatarDropdown />,
       src: 'http://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
     },
-    rightRender: () => <AppHeaderRight />,
-    waterMarkProps: {
-      content: userInfo,
-    },
+    // waterMarkProps: { content: userInfo },
     onPageChange: () => {
       if (!userInfo) {
         console.log('未登录');
